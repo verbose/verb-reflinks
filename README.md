@@ -10,7 +10,7 @@ Install with [npm](https://www.npmjs.com/):
 $ npm install --save verb-reflinks
 ```
 
-**Why should I use use?**
+**Why should I use use this?**
 
 `verb-reflinks` makes it easy to write documentation that references other libraries, by simply adding the name, like `[foo][]`, without having to remember or write the entire URL to the GitHub repository.
 
