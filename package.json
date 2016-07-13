@@ -1,0 +1,65 @@
+{
+  "name": "verb-reflinks",
+  "description": "Verb middleware that resolves reflinks for valid npm package names in markdown documents and appends them to the document.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/jonschlinkert/verb-reflinks",
+  "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
+  "repository": "jonschlinkert/verb-reflinks",
+  "bugs": {
+    "url": "https://github.com/jonschlinkert/verb-reflinks/issues"
+  },
+  "license": "MIT",
+  "files": [
+    "index.js",
+    "LICENSE",
+    "README.md"
+  ],
+  "main": "index.js",
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "dependencies": {
+    "arr-diff": "^3.0.0",
+    "arr-union": "^3.1.0",
+    "debug": "^2.2.0",
+    "is-valid-app": "^0.2.0",
+    "reflinks": "^0.3.1"
+  },
+  "devDependencies": {
+    "gulp-format-md": "^0.1.9",
+    "mocha": "^2.5.3",
+    "templates": "^0.24.2"
+  },
+  "keywords": [
+    "docs",
+    "documentation",
+    "plugin",
+    "reflinks",
+    "verb",
+    "verbplugin"
+  ],
+  "verb": {
+    "toc": false,
+    "layout": "default",
+    "tasks": [
+      "readme"
+    ],
+    "plugins": [
+      "gulp-format-md"
+    ],
+    "lint": {
+      "reflinks": true
+    },
+    "related": {
+      "list": []
+    },
+    "reflinks": [
+      "generate",
+      "verb",
+      "verb-readme-generator"
+    ]
+  }
+}
