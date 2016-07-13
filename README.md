@@ -1,4 +1,4 @@
-# verb-reflinks [![NPM version](https://img.shields.io/npm/v/verb-reflinks.svg?style=flat)](https://www.npmjs.com/package/verb-reflinks) [![NPM downloads](https://img.shields.io/npm/dm/verb-reflinks.svg?style=flat)](https://npmjs.org/package/verb-reflinks) [![Build Status](https://img.shields.io/travis/jonschlinkert/verb-reflinks.svg?style=flat)](https://travis-ci.org/jonschlinkert/verb-reflinks)
+# verb-reflinks [![NPM version](https://img.shields.io/npm/v/verb-reflinks.svg?style=flat)](https://www.npmjs.com/package/verb-reflinks) [![NPM downloads](https://img.shields.io/npm/dm/verb-reflinks.svg?style=flat)](https://npmjs.org/package/verb-reflinks) [![Build Status](https://img.shields.io/travis/verbose/verb-reflinks.svg?style=flat)](https://travis-ci.org/verbose/verb-reflinks)
 
 Verb middleware that resolves reflinks for valid npm package names in markdown documents and appends them to the document.
 
@@ -9,6 +9,10 @@ Install with [npm](https://www.npmjs.com/):
 ```sh
 $ npm install --save verb-reflinks
 ```
+
+**Why should I use use?**
+
+`verb-reflinks` makes it easy to write documentation that references other libraries, by simply adding the name, like `[foo][]`, without having to remember or write the entire URL to the GitHub repository.
 
 ## Usage
 
@@ -21,6 +25,24 @@ var app = verb();
 
 app.postRender(/\.md$/, reflinks());
 ```
+
+**What does this do?**
+
+* Finds reflinks like `[gulp][]` or `[gulp]`
+* Resolves the `homepage` or `repository.url` from the [npm](https://www.npmjs.com) package name
+* Appends the resolve reflink, `[gulp]: http://gulpjs.com`, to the markdown string if it doesn't already exist
+
+**Must be a valid npm name**
+
+For reflinks to be fixed, the reflink text must match the name of a valid npm package. For example `[Foo Bar][]` won't be resolved, but `[gulp][]` would.
+
+## Related projects
+
+You might also be interested in these projects:
+
+* [gulp-reflinks](https://www.npmjs.com/package/gulp-reflinks): Gulp plugin for `reflinks`. Lints a markdown string to find missing reflinks for npm package… [more](https://github.com/jonschlinkert/gulp-reflinks) | [homepage](https://github.com/jonschlinkert/gulp-reflinks "Gulp plugin for `reflinks`. Lints a markdown string to find missing reflinks for npm package names, resolves the homepage or repository url from npm, and appends a valid reflink to the document.")
+* [reflinks](https://www.npmjs.com/package/reflinks): Generate (relative) reference links for a glob of markdown files, allowing you to more easily… [more](https://github.com/jonschlinkert/reflinks) | [homepage](https://github.com/jonschlinkert/reflinks "Generate (relative) reference links for a glob of markdown files, allowing you to more easily create references from one file to another.")
+* [verb](https://www.npmjs.com/package/verb): Documentation generator for GitHub projects. Verb is extremely powerful, easy to use, and is used… [more](https://github.com/verbose/verb) | [homepage](https://github.com/verbose/verb "Documentation generator for GitHub projects. Verb is extremely powerful, easy to use, and is used on hundreds of projects of all sizes to generate everything from API docs to readmes.")
 
 ## Contributing
 
@@ -58,7 +80,7 @@ $ npm install -d && npm test
 ## License
 
 Copyright © 2016, [Jon Schlinkert](https://github.com/jonschlinkert).
-Released under the [MIT license](https://github.com/jonschlinkert/verb-reflinks/blob/master/LICENSE).
+Released under the [MIT license](https://github.com/verbose/verb-reflinks/blob/master/LICENSE).
 
 ***
 
