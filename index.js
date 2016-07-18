@@ -3,6 +3,7 @@
 var isValid = require('is-valid-app');
 var debug = require('debug')('verb-reflinks');
 var reflinks = require('reflinks');
+var unique = require('array-unique');
 var union = require('arr-union');
 var diff = require('arr-diff');
 
@@ -57,8 +58,8 @@ module.exports = function(options) {
 };
 
 function getMatches(str) {
-  var regex = /((?!`)\[[^\W][^\]]+\]\[\](?!`)|(?!`)\[[^\W][^\]]+\](?= |$))/g;
-  var matches = str.match(regex) || [];
+  var regex = /((?!`)\[[^\W][^\]]+\]\[\](?!`)|(?!.*[`\]])\[[^\W][^\]]+\](?= |$))/g;
+  var matches = unique(str.match(regex) || []);
   var len = matches.length;
   var arr = [];
 
@@ -73,6 +74,7 @@ function getMatches(str) {
       arr.push(name);
     }
   }
+  arr.sort();
   return arr;
 }
 
