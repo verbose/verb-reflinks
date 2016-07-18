@@ -67,6 +67,12 @@ function getMatches(str) {
     var match = matches[i];
     var idx = match.indexOf(']');
     var name = match.slice(1, idx).trim().toLowerCase();
+
+    // don't add the reflink if it already exists
+    if (str.indexOf(`[${name}]:`) !== -1) {
+      continue;
+    }
+
     if (!/^[-\w.]+$/.test(name) || /^v?\d+\./.test(name)) {
       continue;
     }
