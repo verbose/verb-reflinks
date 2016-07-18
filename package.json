@@ -1,7 +1,7 @@
 {
   "name": "verb-reflinks",
   "description": "Verb middleware that resolves reflinks for valid npm package names in markdown documents and appends them to the document.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "homepage": "https://github.com/verbose/verb-reflinks",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
   "repository": "verbose/verb-reflinks",
@@ -24,6 +24,7 @@
   "dependencies": {
     "arr-diff": "^3.0.0",
     "arr-union": "^3.1.0",
+    "array-unique": "^0.2.1",
     "debug": "^2.2.0",
     "is-valid-app": "^0.2.0",
     "reflinks": "^0.3.1"
@@ -52,9 +53,9 @@
     ],
     "related": {
       "list": [
-        "verb",
         "gulp-reflinks",
-        "reflinks"
+        "reflinks",
+        "verb"
       ]
     },
     "reflinks": [
