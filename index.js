@@ -1,7 +1,7 @@
 'use strict';
 
-var isValid = require('is-valid-app');
 var debug = require('debug')('verb-reflinks');
+var expand = require('expand-reflinks');
 var reflinks = require('reflinks');
 var unique = require('array-unique');
 var union = require('arr-union');
@@ -22,7 +22,7 @@ module.exports = function(options) {
     }
 
     debug('matching reflinks in <%s>', file.path);
-    var str = file.contents.toString();
+    var str = expand(file.contents.toString());
     var arr = getMatches(str);
     if (arr.length === 0) {
       next(null, file);
