@@ -51,6 +51,7 @@ module.exports = function(options) {
       }
 
       str += '\n\n' + links.join('\n');
+
       file.contents = new Buffer(str);
       next(null, file);
     });
@@ -58,28 +59,33 @@ module.exports = function(options) {
 };
 
 function getMatches(str) {
-  var regex = /((?!`)\[[^\W][^\]]+\]\[\](?!`)|(?!.*[`\]])\[[^\W][^\]]+\](?= |$))/g;
+  var regex = /((?!`)\[[^\W][^\]]+\]\[\](?!`)|(?!`)\[[^\W][^\]]+\](?![`(\[])|(?!`)\[[^\]]+\]\[[^\]]+\](?!`)|(?!.*[`\]])\[[^\W][^\]]+\](?= |$))/gm;
+
   var matches = unique(str.match(regex) || []);
   var len = matches.length;
   var arr = [];
 
   for (var i = 0; i < len; i++) {
     var match = matches[i];
-    var idx = match.indexOf(']');
-    var name = match.slice(1, idx).trim().toLowerCase();
+    var m = /(\[([^\]]+)\])(\[([^\]]+)\])?/.exec(match);
+    var name = m[4] || m[2];
+
+    if (!name || arr.indexOf(name) !== -1) {
+      continue;
+    }
+
+    if (!/^[-a-z0-9.]+$/.test(name) || /^v?\d+\./.test(name)) {
+      continue;
+    }
 
     // don't add the reflink if it already exists
     if (str.indexOf(`[${name}]:`) !== -1) {
       continue;
     }
 
-    if (!/^[-\w.]+$/.test(name) || /^v?\d+\./.test(name)) {
-      continue;
-    }
-    if (name && arr.indexOf(name) === -1) {
-      arr.push(name);
-    }
+    arr.push(name);
   }
+
   arr.sort();
   return arr;
 }
