@@ -79,7 +79,8 @@ function getMatches(str) {
     }
 
     // don't add the reflink if it already exists
-    if (str.indexOf(`[${name}]:`) !== -1) {
+    var re = new RegExp(`(^|\\n)\\[${name}\\]: .`, 'gm');
+    if (re.test(str)) {
       continue;
     }
 

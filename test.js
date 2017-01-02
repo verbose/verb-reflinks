@@ -93,7 +93,7 @@ describe('verb-reflinks', function() {
   });
 
   describe('.matches', function() {
-    it('should expose an `.matches` method', function() {
+    it('should expose a `.matches` method', function() {
       assert.equal(typeof reflinks.matches, 'function');
     });
 
