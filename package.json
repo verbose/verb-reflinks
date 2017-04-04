@@ -23,21 +23,32 @@
     "arr-diff": "^3.0.0",
     "arr-union": "^3.1.0",
     "array-unique": "^0.3.2",
-    "debug": "^2.6.0",
+    "debug": "^2.6.3",
     "expand-reflinks": "^0.2.1",
     "reflinks": "^0.3.5"
   },
   "devDependencies": {
-    "gulp-format-md": "^0.1.11",
+    "gulp-format-md": "^0.1.12",
     "mocha": "^3.2.0",
-    "templates": "^1.0.0"
+    "templates": "^1.2.8"
   },
   "keywords": [
+    "api docs",
+    "code comments",
     "docs",
     "documentation",
+    "generate",
+    "generator",
+    "jsdoc",
+    "markdown",
     "plugin",
+    "readme",
     "reflinks",
+    "template",
+    "templates",
     "verb",
+    "verb-generator",
+    "verbgenerator",
     "verbplugin"
   ],
   "verb": {
