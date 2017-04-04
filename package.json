@@ -25,7 +25,8 @@
     "array-unique": "^0.3.2",
     "debug": "^2.6.3",
     "expand-reflinks": "^0.2.1",
-    "reflinks": "^0.3.5"
+    "reflinks": "^0.3.5",
+    "validate-npm-package-name": "^3.0.0"
   },
   "devDependencies": {
     "gulp-format-md": "^0.1.12",

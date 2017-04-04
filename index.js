@@ -1,6 +1,7 @@
 'use strict';
 
 var debug = require('debug')('verb-reflinks');
+var validateName = require('validate-npm-package-name');
 var expand = require('expand-reflinks');
 var reflinks = require('reflinks');
 var unique = require('array-unique');
@@ -78,6 +79,10 @@ function getMatches(str) {
       continue;
     }
 
+    if (!isValidPackageName(name)) {
+      continue;
+    }
+
     if (!/^[-a-z0-9.]+$/i.test(name) || /^v?\d+\./.test(name)) {
       continue;
     }
@@ -118,8 +123,19 @@ function getDiff(app, existing) {
 }
 
 /**
+ * Returns true if the given name is a valid npm package name
+ */
+
+function isValidPackageName(name) {
+  var stats = validateName(name);
+  return stats.validForNewPackages === true
+    && stats.validForOldPackages === true;
+}
+
+/**
  * Expose helper functions as methods
  */
 
 module.exports.matches = getMatches;
 module.exports.diff = getDiff;
+
