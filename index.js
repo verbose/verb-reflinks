@@ -59,7 +59,7 @@ module.exports = function(options) {
 };
 
 function getMatches(str) {
-  var regex = /((?!`)\[[^\W][^\]]+\]\[\](?!`)|(?!`)\[[^\W][^\]]+\](?![`(\[])|(?!`)\[[^\]]+\]\[[^\]]+\](?!`)|(?!.*[`\]])\[[^\W][^\]]+\](?= |$))/gm;
+  var regex = /(`\[|\[[^\W][^\]]+\]\[\](?!`)|(?!`)\[[^\W][^\]]+\](?![`(\[])|(?!`)\[[^\]]+\]\[[^\]]+\](?!`)|(?!.*[`\]])\[[^\W][^\]]+\](?= |$))/gm;
 
   var matches = unique(str.match(regex) || []);
   var len = matches.length;
@@ -67,6 +67,10 @@ function getMatches(str) {
 
   for (var i = 0; i < len; i++) {
     var match = matches[i];
+    if (match.charAt(0) === '`') {
+      continue;
+    }
+
     var m = /(\[([^\]]+)\])(\[([^\]]+)\])?/.exec(match);
     var name = m[4] || m[2];
 
@@ -74,7 +78,7 @@ function getMatches(str) {
       continue;
     }
 
-    if (!/^[-a-z0-9.]+$/.test(name) || /^v?\d+\./.test(name)) {
+    if (!/^[-a-z0-9.]+$/i.test(name) || /^v?\d+\./.test(name)) {
       continue;
     }
 
