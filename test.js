@@ -1,10 +1,10 @@
 'use strict';
 
 require('mocha');
-var assert = require('assert');
-var reflinks = require('./');
-var verb = require('templates');
-var app;
+const assert = require('assert');
+const reflinks = require('./');
+const verb = require('templates');
+let app;
 
 describe('verb-reflinks', function() {
   beforeEach(function() {

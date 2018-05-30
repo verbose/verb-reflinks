@@ -14,24 +14,23 @@
   ],
   "main": "index.js",
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=8"
   },
   "scripts": {
     "test": "mocha"
   },
   "dependencies": {
-    "arr-diff": "^3.0.0",
+    "arr-diff": "^4.0.0",
     "arr-union": "^3.1.0",
     "array-unique": "^0.3.2",
-    "debug": "^2.6.3",
     "expand-reflinks": "^0.2.1",
-    "reflinks": "^0.3.5",
+    "reflinks": "^1.0.0",
     "validate-npm-package-name": "^3.0.0"
   },
   "devDependencies": {
-    "gulp-format-md": "^0.1.12",
-    "mocha": "^3.2.0",
-    "templates": "^1.2.8"
+    "gulp-format-md": "^1.0.0",
+    "mocha": "^5.2.0",
+    "templates": "^1.2.9"
   },
   "keywords": [
     "api docs",

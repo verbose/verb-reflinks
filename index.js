@@ -1,40 +1,35 @@
 'use strict';
 
-var debug = require('debug')('verb-reflinks');
-var validateName = require('validate-npm-package-name');
-var expand = require('expand-reflinks');
-var reflinks = require('reflinks');
-var unique = require('array-unique');
-var union = require('arr-union');
-var diff = require('arr-diff');
+const validateName = require('validate-npm-package-name');
+const expand = require('expand-reflinks');
+const reflinks = require('reflinks');
+const unique = require('array-unique');
+const union = require('arr-union');
+const diff = require('arr-diff');
 
 /**
  * Lint a markdown string for missing reflinks and append them
  * to the end of the string.
  */
 
-module.exports = function(options) {
-  options = options || {};
-
+module.exports = function(options = {}) {
   return function(file, next) {
     if (!file.isBuffer()) {
       next();
       return;
     }
 
-    debug('matching reflinks in <%s>', file.path);
-    var str = expand(file.contents.toString());
-    var arr = getMatches(str);
+    let str = expand(file.contents.toString());
+    let arr = getMatches(str);
     if (arr.length === 0) {
       next(null, file);
       return;
     }
 
-    debug('found %s missing reflink(s): %j', arr.length, arr);
     file._reflinks = arr;
 
     // add `options.reflinks` to file.contents, but not to `file._reflinks`
-    var list = union([], options.reflinks, arr);
+    let list = union([], options.reflinks, arr);
     reflinks(list, options, function(err, res) {
       if (err) {
         next(err);
@@ -42,7 +37,7 @@ module.exports = function(options) {
       }
 
       // filter out reflinks that are already in the file.contents
-      var links = res.links.filter(function(link) {
+      let links = res.links.filter(function(link) {
         return str && str.indexOf(link) === -1;
       });
 
@@ -53,27 +48,27 @@ module.exports = function(options) {
 
       str += '\n\n' + links.join('\n');
 
-      file.contents = new Buffer(str);
+      file.contents = Buffer.from(str);
       next(null, file);
     });
   };
 };
 
 function getMatches(str) {
-  var regex = /(`\[|\[[^\W][^\]]+\]\[\](?!`)|(?!`)\[[^\W][^\]]+\](?![`(\[])|(?!`)\[[^\]]+\]\[[^\]]+\](?!`)|(?!.*[`\]])\[[^\W][^\]]+\](?= |$))/gm;
+  let regex = /(`\[|\[[^\W][^\]]+\]\[\](?!`)|(?!`)\[[^\W][^\]]+\](?![`(\[])|(?!`)\[[^\]]+\]\[[^\]]+\](?!`)|(?!.*[`\]])\[[^\W][^\]]+\](?= |$))/gm;
 
-  var matches = unique(str.match(regex) || []);
-  var len = matches.length;
-  var arr = [];
+  let matches = (str.match(regex) || []).filter((e, i, arr) => arr.indexOf(e) === i);
+  let len = matches.length;
+  let arr = [];
 
-  for (var i = 0; i < len; i++) {
-    var match = matches[i];
+  for (let i = 0; i < len; i++) {
+    let match = matches[i];
     if (match.charAt(0) === '`') {
       continue;
     }
 
-    var m = /(\[([^\]]+)\])(\[([^\]]+)\])?/.exec(match);
-    var name = m[4] || m[2];
+    let m = /(\[([^\]]+)\])(\[([^\]]+)\])?/.exec(match);
+    let name = m[4] || m[2];
 
     if (!name || arr.indexOf(name) !== -1) {
       continue;
@@ -88,7 +83,7 @@ function getMatches(str) {
     }
 
     // don't add the reflink if it already exists
-    var re = new RegExp(`(^|\\n)\\[${name}\\]: .`, 'gm');
+    let re = new RegExp(`(^|\\n)\\[${name}\\]: .`, 'gm');
     if (re.test(str)) {
       continue;
     }
@@ -107,7 +102,7 @@ function getMatches(str) {
  *
  * ```js
  * app.set('cache.reflinks', ['foo']);
- * var diff = reflinks.diff(app, ['foo', 'bar', 'baz']);
+ * let diff = reflinks.diff(app, ['foo', 'bar', 'baz']);
  * console.log(diff);
  * //=> ['bar', baz']
  * ```
@@ -127,7 +122,7 @@ function getDiff(app, existing) {
  */
 
 function isValidPackageName(name) {
-  var stats = validateName(name);
+  const stats = validateName(name);
   return stats.validForNewPackages === true
     && stats.validForOldPackages === true;
 }
